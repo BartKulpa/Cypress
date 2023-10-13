@@ -1,0 +1,19 @@
+{
+  "name": "qa-workshops",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:open": "npx cypress open"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^12.17.3",
+    "cypress-xpath": "^2.0.1"
+  },
+  "dependencies": {
+    "typescript": "^5.1.6"
+  }
+}
