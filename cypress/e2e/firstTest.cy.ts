@@ -60,6 +60,7 @@ describe("QA workshop", () => {
 	  })
 
 	  it.only('Forms test', () => {
+		cy.viewport(1280,720);
 		cy.visit("https://demoqa.com/automation-practice-form");
 		cy.get("[id='firstName']").type("John");
 		cy.get("[id='lastName']").type("Doe");
@@ -71,5 +72,15 @@ describe("QA workshop", () => {
 		cy.contains("button", "Next Month").click();
 		cy.get("div[class*='current-month']").should('have.text', 'November 2023');
 		cy.get("div[class^='react-datepicker__day']").contains('15').click();
+		cy.get("[id='subjectsInput']").type("English{Enter}");
+		cy.get("[id='subjectsInput']").type("M").then(()=>{
+			cy.get("[id*='react-select-2-option']").contains('Chemistry').click();
+		});
+		cy.contains("label","Sports").siblings("input").check({force:true});
+		cy.get("[id='uploadPicture']").selectFile("cypress/fixtures/mobile.jpg");
+		cy.get("[id='currentAddress']").type("ul. Pawia 9");
+		cy.get("[id='state']").click({force:true}).then(()=>{
+			cy.get("[id*='react-select-3-option']").contains("Haryana").click();
+		});
 	  })
 });
