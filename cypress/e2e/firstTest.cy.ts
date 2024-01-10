@@ -60,7 +60,7 @@ describe("QA workshop", () => {
 	  })
 
 	  it.only('Forms test', () => {
-		cy.viewport(1280,720);
+		cy.viewport(1280,1200);
 		cy.visit("https://demoqa.com/automation-practice-form");
 		cy.get("[id='firstName']").type("John");
 		cy.get("[id='lastName']").type("Doe");
@@ -70,7 +70,7 @@ describe("QA workshop", () => {
 		cy.get("[id='userNumber']").type("1111111111").blur();
 		cy.get("[id='dateOfBirthInput']").click();
 		cy.contains("button", "Next Month").click();
-		cy.get("div[class*='current-month']").should('have.text', 'November 2023');
+		cy.get("div[class*='current-month']").should('have.text', 'January 2024');
 		cy.get("div[class^='react-datepicker__day']").contains('15').click();
 		cy.get("[id='subjectsInput']").type("English{Enter}");
 		cy.get("[id='subjectsInput']").type("M").then(()=>{
@@ -79,8 +79,23 @@ describe("QA workshop", () => {
 		cy.contains("label","Sports").siblings("input").check({force:true});
 		cy.get("[id='uploadPicture']").selectFile("cypress/fixtures/mobile.jpg");
 		cy.get("[id='currentAddress']").type("ul. Pawia 9");
-		cy.get("[id='state']").click({force:true}).then(()=>{
+		cy.contains("Select State").click({force:true}).then(()=>{
 			cy.get("[id*='react-select-3-option']").contains("Haryana").click();
 		});
+		cy.contains("Select City").click({force:true}).then(()=>{
+			cy.contains("Panipat").click();
+		});
+		cy.get("[id='submit']").click();
+
+		cy.get("[id='example-modal-sizes-title-lg']").should('have.text', 'Thanks for submitting the form');
+		const parameterNames = ['Student Name','Student Email','Gender','Mobile','Date of Birth','Subjects','Hobbies','Picture','Address','State and City'];
+		const valueNames = ['John Doe','x.test@test.com','Male','1111111111','15 January,2024','English, Chemistry','Sports','mobile.jpg','ul. Pawia 9','Haryana Panipat'];
+
+		for (let i=0; i<parameterNames.length; i++){
+			cy.get('tr').eq(i+1).find('td').eq(0).should('have.text', parameterNames[i]);
+			cy.get('tr').eq(i+1).find('td').eq(1).should('have.text', valueNames[i]);
+		}
+
+		cy.get("[id='closeLargeModal']").click();
 	  })
 });
