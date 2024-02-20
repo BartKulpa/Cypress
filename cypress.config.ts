@@ -6,5 +6,6 @@ module.exports = defineConfig({
 			// implement node event listeners here
 		},
 		hideXHRInCommandLog: true,
+		baseUrl: "https://demoqa.com/"
 	},
 });
