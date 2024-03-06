@@ -49,4 +49,25 @@ cy.get("[id='subjectsInput']").type(`${subjectName}{Enter}`);
         
         
     }
+
+    selectStateAndCity(state: string, city: string){
+        cy.contains("Select State").click({force:true}).then(()=>{
+			cy.get("[id*='react-select-3-option']").contains(state).click();
+		});
+		cy.contains("Select City").click({force:true}).then(()=>{
+			cy.contains(city).click();
+		});
+
+    }
+
+    fileUpload(filename: string){
+        cy.get("[id='uploadPicture']").selectFile(`cypress/fixtures/${filename}`);
+    }
+
+    clickButton(buttonId: string){
+        cy.get(`[id='${buttonId}']`).click();
+    }
+
+    
+
 }
