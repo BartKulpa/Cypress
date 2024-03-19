@@ -4,6 +4,7 @@ import Modals from "../support/Modals";
 import ElementsPage from "../support/ElementsPage";
 import FormsPage from "../support/FormsPage";
 import { student } from "../fixtures/userData";
+import { all } from "cypress/types/bluebird";
 
 const modals = new Modals();
 const elementsPage = new ElementsPage();
@@ -107,11 +108,8 @@ describe("QA workshop", () => {
     formsPage.selectStateAndCity(student.state, student.city);
     formsPage.clickButton("submit");
     // cy.get("[id='submit']").click();
+    const dateOfBirth = student.dateOfBirth.split(" ")[0]+" "+student.dateOfBirth.split(" ")[1]+","+student.dateOfBirth.split(" ")[2]
 
-    cy.get("[id='example-modal-sizes-title-lg']").should(
-      "have.text",
-      "Thanks for submitting the form"
-    );
     const parameterNames = [
       "Student Name",
       "Student Email",
@@ -125,29 +123,22 @@ describe("QA workshop", () => {
       "State and City",
     ];
     const valueNames = [
-      "John Doe",
-      "x.test@test.com",
-      "Male",
-      "1111111111",
-      "15 February, 2024",
-      "English, Chemistry",
-      "Sports",
-      "mobile.jpg",
-      "ul. Pawia 9",
-      "Haryana Panipat",
+      student.studentFirstName+" "+student.studentLastName,
+      student.studentEmail,
+      student.studentGender,
+      student.mobile,
+      dateOfBirth,
+      student.subjects.toString().replace(/,/g,", "),
+      student.hobbies.toString().replace(/,/g,", "),
+      student.picture,
+      student.address,
+      student.state+" "+student.city,
     ];
 
+    formsPage.assertFormTitleDisplayed();
+
     for (let i = 0; i < parameterNames.length; i++) {
-      cy.get("tr")
-        .eq(i + 1)
-        .find("td")
-        .eq(0)
-        .should("have.text", parameterNames[i]);
-      cy.get("tr")
-        .eq(i + 1)
-        .find("td")
-        .eq(1)
-        .should("have.text", valueNames[i]);
+      formsPage.assertFormValueDisplayed(parameterNames[i], valueNames[i]);   
     }
     formsPage.clickButton("closeLargeModal");
     // cy.get("[id='closeLargeModal']").click();

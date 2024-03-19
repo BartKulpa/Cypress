@@ -1,3 +1,5 @@
+import { UserData } from "../types";
+
 export default class FormsPage {
 
     fillInput (id:string, value: string){
@@ -68,6 +70,29 @@ cy.get("[id='subjectsInput']").type(`${subjectName}{Enter}`);
         cy.get(`[id='${buttonId}']`).click();
     }
 
-    
+    assertFormTitleDisplayed(){
+        cy.get("[id='example-modal-sizes-title-lg']").should(
+            "have.text",
+            "Thanks for submitting the form"
+          );
+
+    }
+
+    assertFormValueDisplayed(label: string, value: string){
+        const parameterNames = [
+            "Student Name",
+            "Student Email",
+            "Gender",
+            "Mobile",
+            "Date of Birth",
+            "Subjects",
+            "Hobbies",
+            "Picture",
+            "Address",
+            "State and City",
+          ];
+                
+          cy.contains("td", label).siblings("td").should("have.text", value);
+    }
 
 }
