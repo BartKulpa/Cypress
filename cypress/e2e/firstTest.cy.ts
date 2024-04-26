@@ -4,11 +4,12 @@ import Modals from "../support/Modals";
 import ElementsPage from "../support/ElementsPage";
 import FormsPage from "../support/FormsPage";
 import { student } from "../fixtures/userData";
-import { all } from "cypress/types/bluebird";
+import WidgetsPage from "../support/WidgetsPage";
 
 const modals = new Modals();
 const elementsPage = new ElementsPage();
 const formsPage = new FormsPage();
+const widgetsPage = new WidgetsPage();
 
 describe("QA workshop", () => {
   it("First test", () => {
@@ -84,7 +85,7 @@ describe("QA workshop", () => {
     );
   });
 
-  it.only("Forms test", () => {
+  it("Forms test", () => {
     cy.viewport(1280, 1200);
     cy.visit("automation-practice-form");
     formsPage.fillInput("firstName", student.studentFirstName);
@@ -155,4 +156,13 @@ describe("QA workshop", () => {
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
     );
   });
+
+  it.only("Tooltip", () => {
+    cy.visit("tool-tips");
+    widgetsPage.elementHover('Button', 'You hovered over the Button');
+    widgetsPage.elementHover('TextField', 'You hovered over the text field');
+    widgetsPage.linkHover('Contrary');
+    widgetsPage.linkHover('1.10.32');
+  });
+
 });
