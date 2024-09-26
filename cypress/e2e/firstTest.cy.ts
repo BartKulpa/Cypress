@@ -5,6 +5,7 @@ import ElementsPage from "../support/ElementsPage";
 import FormsPage from "../support/FormsPage";
 import { student } from "../fixtures/userData";
 import WidgetsPage from "../support/WidgetsPage";
+import { forEach } from "cypress/types/lodash";
 
 const modals = new Modals();
 const elementsPage = new ElementsPage();
@@ -157,12 +158,23 @@ describe("QA workshop", () => {
     );
   });
 
-  it.only("Tooltip", () => {
+  it("Tooltip", () => {
     cy.visit("tool-tips");
     widgetsPage.elementHover('Button', 'You hovered over the Button');
     widgetsPage.elementHover('TextField', 'You hovered over the text field');
-    widgetsPage.linkHover('Contrary');
-    widgetsPage.linkHover('1.10.32');
+    // widgetsPage.linkHover('Contrary');
+    // widgetsPage.linkHover('1.10.32');
+    
+    cy.get('div[id="texToolTopContainer"] a').each((el)=>{
+      const text = el.text();
+      widgetsPage.linkHover(text);
+    });
+  });
+
+  it.only("Slider", () => {
+    cy.visit("slider");
+    widgetsPage.triggerSlider("input[id='sliderValue']", "70");
+    widgetsPage.triggerSlider("input[type='range']", "70");
   });
 
 });

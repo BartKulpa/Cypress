@@ -22,5 +22,7 @@ export default class WidgetsPage {
         cy.get('@element').trigger('mouseout');
       });
   }
-
+  triggerSlider(elementId: string, value: string){
+    cy.get(elementId).invoke("val", value).trigger("change");
+  }
 }
